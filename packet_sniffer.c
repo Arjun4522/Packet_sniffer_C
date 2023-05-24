@@ -42,9 +42,9 @@ void pac_process(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* p
         
     }
 
-    printf("Device: %s\n", dev);
-    printf("IP address: %s\n", ip);
-    printf("Subnet mask: %s\n", subnet_mask);
+    printf("Interface: %s\n", dev);
+    printf("Network IP address: %s\n", ip);
+    printf("Network Subnet mask: %s\n", subnet_mask);
  
     printf("Packet Count: %d\n", ++count);    
     printf("Recieved Packet Size: %d\n", pkthdr->len);    
