@@ -1,5 +1,5 @@
 # Packet_sniffer_C
-Network Packet Sniffer
+Network Packet Sniffer in C
 # Descrption:
 This is a simple network packet sniffer implemented in C using the libpcap library. The program captures network packets flowing through a specified network interface and provides a foundation for analyzing packet data.
 ### Getting Started:
