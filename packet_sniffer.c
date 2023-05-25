@@ -9,52 +9,55 @@
 #include <ctype.h>
 #include <string.h>
 
-int i;
-char *dev; 
-char errbuf[PCAP_ERRBUF_SIZE]; 
-pcap_t* descr; 
-const u_char *packet; 
-struct pcap_pkthdr hdr;
-struct ether_header *eptr;    
-struct bpf_program fp;        
-bpf_u_int32 maskp;            
-bpf_u_int32 netp;   
-struct in_addr address;
-char ip[13];
-char subnet_mask[13]; 
+#define A1(addr) inet_ntoa(addr)
+#define A2(addr) inet_ntoa(addr)
 
-void pac_process(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* packet){ 
+int i;
+char *d; 
+char e[PCAP_ERRBUF_SIZE]; 
+pcap_t* c; 
+const u_char *p; 
+struct pcap_pkthdr h;
+struct ether_header *ep;    
+struct bpf_program f;        
+bpf_u_int32 m;            
+bpf_u_int32 n;   
+struct in_addr a;
+char ip[13];
+char s[13]; 
+
+void g(u_char *args, const struct pcap_pkthdr* ph, const u_char* pkt){ 
 
     int i=0; 
     static int count=0; 
 
-    address.s_addr = netp;
-    strcpy(ip, inet_ntoa(address));
+    a.s_addr = n;
+    strcpy(ip, A1(a));
     if (ip == NULL) {
         perror("inet_ntoa"); 
         
     }
     
-    address.s_addr = maskp;
-    strcpy(subnet_mask, inet_ntoa(address));
-    if (subnet_mask == NULL) {
+    a.s_addr = m;
+    strcpy(s, A2(a));
+    if (s == NULL) {
         perror("inet_ntoa");
         
     }
 
-    printf("Interface: %s\n", dev);
-    printf("Network IP address: %s\n", ip);
-    printf("Network Subnet mask: %s\n", subnet_mask);
+    printf("Interface: %s\n", d);
+    printf("IP address: %s\n", ip);
+    printf("Subnet mask: %s\n", s);
  
     printf("Packet Count: %d\n", ++count);    
-    printf("Recieved Packet Size: %d\n", pkthdr->len);    
+    printf("Received Packet Size: %d\n", ph->len);    
     printf("Payload:\n");                     
-    for(i=0;i<pkthdr->len;i++) { 
-        if(isprint(packet[i]))                
-            printf("%c ",packet[i]);          
+    for(i=0;i<ph->len;i++) { 
+        if(isprint(pkt[i]))                
+            printf("%c ",pkt[i]);          
         else
             printf(" . ");         
-        if((i%16==0 && i!=0) || i==pkthdr->len-1) 
+        if((i%16==0 && i!=0) || i==ph->len-1) 
             printf("\n"); 
     }
 
@@ -62,7 +65,6 @@ void pac_process(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* p
     printf("\n");
 
 }
-
 
 int main(int argc,char **argv) 
 {          
@@ -73,23 +75,25 @@ int main(int argc,char **argv)
         return 0;
     } 
 
-    dev = argv[1];
+    d = argv[1];
      
-    if(dev == NULL) {
-        fprintf(stderr, "Could not find interface: %s\n", errbuf);
+    if(d == NULL) {
+        fprintf(stderr, "Could not find interface: %s\n", e);
         exit(1);
     } 
     
-    pcap_lookupnet(dev, &netp, &maskp, errbuf);
+    pcap_lookupnet(d, &n, &m, e);
 
-    descr = pcap_open_live(dev, BUFSIZ, 1,1000, errbuf); 
+    c = pcap_open_live(d, BUFSIZ, 1,1000, e); 
 
-    if(descr == NULL) {
-        printf("pcap_open_live(): %s\n", errbuf);
+    if(c == NULL) {
+        printf("pcap_open_live(): %s\n", e);
         exit(1);
     } 
+    
+    printf("Waiting for traffic....\n\n");
    
-    pcap_loop(descr, -1, pac_process, NULL); 
+    pcap_loop(c, -1, g, NULL); 
     
     return 0; 
 }
