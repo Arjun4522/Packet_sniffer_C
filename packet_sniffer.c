@@ -48,7 +48,7 @@ void g(u_char *args, const struct pcap_pkthdr* ph, const u_char* pkt){
     printf("Interface: %s\n", d);
     printf("IP address: %s\n", ip);
     printf("Subnet mask: %s\n", s);
- 
+    printf("\n");
     printf("Packet Count: %d\n", ++count);    
     printf("Received Packet Size: %d\n", ph->len);    
     printf("Payload:\n");                     
