@@ -4,7 +4,7 @@ Network Packet Sniffer in C
 This is a simple network packet sniffer implemented in C using the libpcap library. The program captures network packets flowing through a specified network interface and provides a foundation for analyzing packet data.
 ### Getting Started:
 1. Install libpcap for Debian-based distributions using `sudo apt update && sudo apt-get install libpcap-dev`
-3. Clone the repository: `git clone https://github.com/orzooman/Packet_sniffer_C.git`
+3. Clone the repository: `https://github.com/Arjun4522/Packet_sniffer_C`
 4. Navigate to the project directory: `cd Packet_sniffer_C`
 5. Compile the program: `gcc -o sniffer packet_sniffer.c -lpcap`
 6. Run the packet sniffer: `sudo ./sniffer <interface>`
